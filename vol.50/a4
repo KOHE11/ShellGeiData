@@ -1,0 +1,2 @@
+time seq 100000000 | shuf | paste - - | tr \\t ' ' > a
+

@@ -1,0 +1,2 @@
+time cat hoge | grep -vE '^a+$' | tr -d \\n | grep -oEi "un(ko|ity)" | sort | uniq -c
+
