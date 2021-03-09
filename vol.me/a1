@@ -1,0 +1,2 @@
+hoge.txtの中でrosを含む行にある数字の和を求める．
+cat hoge.txt | grep ros | sed -e 's/[^0-9]/ /g' | xargs echo | sed -e 's/ /\n/g' | sed -r -e 's/0//g' | awk '{s += $1} END {print s}'
