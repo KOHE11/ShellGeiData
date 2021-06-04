@@ -1,0 +1,31 @@
+1
+nkf -w data.csv | tr , " " | sed -r 's;/(.) ;/0\1 ;' | sort -k2,2  -k1,1r | awk '{print $1,$3,$2}' | uniq -f 2
+
+uft-8変換
+文字置換
+;を区切り文字にして，\をエスケープ無しで使う．()内をグループ化して\1で1番目のグループ選択 echo unkounkounkounko | sed -r 's;(ko);pin\1;g'
+2から2フィールドでsort
+1から1フィールドでreverse sort
+awk
+初めから2つのフィールド無視してuniq
+
+2
+curl https://indexes.nikkei.co.jp/nkave/historical/nikkei_stock_average_daily_jp.csv | nkf -w | tr ,\" '  ' | grep -a " [0-9]" | sed -r "s;/[0-9]+ ;;g" | awk '{ print $2,$1 }' | sort -k2,2 -k1,1n | pee 'uniq -f 1' 'tac | uniq -f 1' | sort -k2,2 | xargs -n 4 | awk '{ print $2,$1,$3 }'
+
+utf-8
+色々
+peeは出力をコマンドにteeはファイルに echo {1..10} | pee 'tr " " "a"' 'xargs -n 2'
+uniq -f 最初のnフィールド(列)を比較しない
+xargs -n 適用の最大行数
+
+3
+diff <(cat flags_a | grep -o ..) <(cat flags_b | grep -o ..) | grep -Eo "^[0-9]+"
+paste <(cat flags_a | grep -o ..) <(cat flags_b | grep -o ..) | awk '$1!=$2{print NR}'
+
+国旗は2文字で1つなので，2文字で比較して出力．
+<()で出力をコマンドの引数として扱う
+
+4
+cat nabe | sed -r "s/(辺|邉|邊|部)/\1\n/g"
+
+4つの感じは，cat nabe | grep -o . | sort -u で出力
